@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Psychotest – Know Your Mind</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --navy: #03045e;
+        --blue: #0077b6;
+        --sky: #00b4d8;
+        --sky-light: #90e0ef;
+        --white: #f8fbff;
+        --muted: rgba(248, 251, 255, 0.6);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--navy);
+        color: var(--white);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 10% 0%,
+            rgba(0, 119, 182, 0.35) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 50% at 90% 100%,
+            rgba(0, 180, 216, 0.25) 0%,
+            transparent 55%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      nav,
+      section,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 6vw;
+        border-bottom: 1px solid rgba(0, 180, 216, 0.1);
+        backdrop-filter: blur(12px);
+        background: rgba(3, 4, 94, 0.6);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .nav-logo span {
+        color: var(--sky);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--sky);
+      }
+
+      .nav-cta {
+        background: var(--sky) !important;
+        color: var(--navy) !important;
+        padding: 0.5rem 1.2rem !important;
+        border-radius: 100px !important;
+        font-weight: 600 !important;
+      }
+      .nav-cta:hover {
+        background: var(--sky-light) !important;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 2px;
+        background: var(--white);
+        border-radius: 2px;
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 88vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 6vw 5rem;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(0, 180, 216, 0.12);
+        border: 1px solid rgba(0, 180, 216, 0.3);
+        border-radius: 100px;
+        padding: 0.35rem 1rem;
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--sky);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--sky);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.2rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        max-width: 700px;
+        margin-bottom: 1.5rem;
+        animation: fadeUp 0.6s 0.1s ease both;
+      }
+
+      h1 .accent {
+        background: linear-gradient(135deg, var(--sky), var(--sky-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-sub {
+        font-size: 1.1rem;
+        line-height: 1.75;
+        color: var(--muted);
+        max-width: 500px;
+        margin-bottom: 2.8rem;
+        animation: fadeUp 0.6s 0.2s ease both;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 4rem;
+        animation: fadeUp 0.6s 0.3s ease both;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 3rem;
+        padding-top: 2.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        animation: fadeUp 0.6s 0.4s ease both;
+      }
+
+      .stat-num {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--sky);
+      }
+      .stat-label {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+
+      /* BUTTONS */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: linear-gradient(135deg, var(--blue), var(--sky));
+        color: var(--white);
+        padding: 0.95rem 2.2rem;
+        border-radius: 100px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        box-shadow: 0 8px 32px rgba(0, 180, 216, 0.3);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 40px rgba(0, 180, 216, 0.45);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        background: transparent;
+        color: var(--white);
+        padding: 0.95rem 2.2rem;
+        border-radius: 100px;
+        font-weight: 500;
+        font-size: 1rem;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .btn-secondary:hover {
+        border-color: var(--sky);
+        background: rgba(0, 180, 216, 0.08);
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 6rem 6vw;
+      }
+      .section-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--sky);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      h2 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+      }
+      .section-intro {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 480px;
+        line-height: 1.7;
+        margin-bottom: 3rem;
+      }
+
+      /* STEPS */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .step {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 180, 216, 0.18);
+        border-radius: 20px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.3s,
+          border-color 0.3s;
+      }
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--blue), var(--sky));
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .step:hover {
+        transform: translateY(-4px);
+        border-color: rgba(0, 180, 216, 0.4);
+      }
+      .step:hover::before {
+        opacity: 1;
+      }
+
+      .step-num {
+        font-family: "Syne", sans-serif;
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: rgba(0, 180, 216, 0.1);
+        line-height: 1;
+        margin-bottom: 0.8rem;
+      }
+      .step-icon {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+      }
+      .step h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .step p {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      /* DOWNLOAD */
+      .download-section {
+        text-align: center;
+        background: rgba(0, 119, 182, 0.05);
+        border-top: 1px solid rgba(0, 180, 216, 0.08);
+      }
+      .download-section .section-intro {
+        margin: 0 auto 2.5rem;
+      }
+      .download-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      .download-note {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 2rem;
+      }
+
+      .disclaimer-box {
+        background: rgba(0, 119, 182, 0.1);
+        border: 1px solid rgba(0, 180, 216, 0.2);
+        border-radius: 16px;
+        padding: 1.2rem 1.8rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        max-width: 520px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .disclaimer-icon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .disclaimer-text {
+        font-size: 0.83rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .disclaimer-text strong {
+        color: var(--white);
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(0, 180, 216, 0.1);
+        padding: 2.2rem 6vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+      }
+      .footer-logo span {
+        color: var(--sky);
+      }
+      .footer-copy {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(1.5);
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* MOBILE */
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+        .nav-links.open {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(3, 4, 94, 0.97);
+          padding: 1.5rem 6vw;
+          border-bottom: 1px solid rgba(0, 180, 216, 0.1);
+          gap: 1.2rem;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .hero-stats {
+          gap: 1.8rem;
+        }
+        footer {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="nav-logo">Psycho<span>test</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#download" class="nav-cta">Download APK</a></li>
+      </ul>
+      <div class="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-badge">Free · Android App</div>
+      <h1>Understand <span class="accent">how you're really feeling</span></h1>
+      <p class="hero-sub">
+        A simple, science-informed emotional wellness check-in. Answer 20
+        questions and get a clear picture of your mental wellbeing — in minutes.
+      </p>
+      <div class="hero-actions">
+        <a href="#download" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 2h14v2H5v-2z"
+            />
+          </svg>
+          Download the App
+        </a>
+        <a href="#how-it-works" class="btn-secondary">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">20</div>
+          <div class="stat-label">Wellness questions</div>
+        </div>
+        <div>
+          <div class="stat-num">&lt;5 min</div>
+          <div class="stat-label">To complete</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Free to use</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="reveal">
+        <div class="section-label">How it works</div>
+        <h2>Simple. Private. Insightful.</h2>
+        <p class="section-intro">
+          No sign-up required. No data shared. Just an honest check-in with
+          yourself.
+        </p>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-icon">📋</div>
+          <h3>Answer 20 Questions</h3>
+          <p>
+            Respond honestly to simple questions about how you've been feeling
+            over the past four weeks.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-icon">⚡</div>
+          <h3>Get Instant Results</h3>
+          <p>
+            Receive a clear, compassionate summary of your emotional wellbeing
+            score right away.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download-section" id="download">
+      <div class="reveal">
+        <div class="section-label">Get the app</div>
+        <h2>Start your check-in today</h2>
+        <p class="section-intro">
+          Free to download. No account needed. Android devices only.
+        </p>
+        <div class="download-buttons">
+          <a
+            href="https://mega.nz/file/l5hFlQgC#tKfE9fqwcueMN_KLk6R6DmVEA3xsA8Ehca8mBECw0Io"
+            class="btn-primary"
+            style="font-size: 1.05rem; padding: 1rem 2.5rem"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 16l-5-5 1.41-1.41L11 13.17V4h2v9.17l2.59-2.58L17 11l-5 5zm-7 2h14v2H5v-2z"
+              />
+            </svg>
+            Download APK
+          </a>
+        </div>
+        <div class="disclaimer-box">
+          <div class="disclaimer-icon">⚠️</div>
+          <div class="disclaimer-text">
+            <strong>Installing from outside Google Play:</strong> You may need
+            to enable <em>Install unknown apps</em> in your Android settings. Go
+            to <strong>Settings → Security → Install unknown apps</strong> and
+            allow your browser or file manager.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">Psycho<span>test</span></div>
+      <div class="footer-copy">© 2026 Psychotest. All rights reserved.</div>
+    </footer>
+
+    <script>
+      function toggleNav() {
+        document.getElementById("navLinks").classList.toggle("open");
+      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting)
+              setTimeout(() => e.target.classList.add("visible"), i * 80);
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
